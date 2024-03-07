@@ -1,6 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { LoginInput } from '../../models/authModel';
+import { catchError, of } from 'rxjs';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -16,6 +19,7 @@ export class LoginComponent {
   isFormClicked: boolean = false;
   constructor(
     private _fb: FormBuilder,
+    private _service: AuthService,
   ) { }
 
   get getControls() {
@@ -23,5 +27,31 @@ export class LoginComponent {
   }
 
   submit() {
+    this.isFormClicked = true;
+    if (this.form.invalid) {
+      if (this.getControls.email.invalid) {
+
+      } else if (this.getControls.password.invalid) {
+
+      }
+
+      console.log(this.form.value);
+      return;
+    }
+
+    this._service
+      .login(this.form.value as LoginInput)
+      .pipe(
+        catchError((err) => {
+
+          return of(null);
+        })
+      )
+      .subscribe((res: any) => {
+        if (res.token) {
+          if (res.token != null)
+            console.log(res.token);
+        }
+      });
   }
 }
