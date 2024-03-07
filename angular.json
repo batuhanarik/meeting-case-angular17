@@ -28,7 +28,7 @@
         "@schematics/angular:service": {
           "skipTests": true
         }
-     },
+      },
       "root": "",
       "sourceRoot": "src",
       "prefix": "app",
@@ -48,7 +48,9 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css"
+              "src/styles.css",
+              "node_modules/primeng/resources/themes/lara-light-blue/theme.css",
+              "node_modules/primeng/resources/primeng.min.css"
             ],
             "scripts": []
           },
@@ -114,5 +116,8 @@
         }
       }
     }
+  },
+  "cli": {
+    "analytics": "474e5371-b0d9-4c69-809e-aeaba88fcee3"
   }
 }
