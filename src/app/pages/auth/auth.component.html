@@ -1,27 +1,21 @@
-<section style="background-image: url('assets/images/auth_bg.jpg')"
-    class="w-full max-sm:h-full bg-white-200 md:h-screen sm:h-screen bg-cover">
+<section style="background-image: url('assets/images/meeting_bg.jpg')"
+    class="w-full bg-white-200 h-svh max-sm:bg-center  bg-cover">
     <div class="container mx-auto h-full py-12 px-6">
-        <div class="g-6 flex h-full items-center justify-center text-gray-800 opacity-90">
-            <div class="">
+        <div class="g-6 flex items-center justify-center text-gray-800 opacity-90">
+            <div>
                 <div class="block rounded-lg bg-white shadow-lg">
                     <div class="g-0 lg:flex lg:flex-wrap">
                         <div class="px-4 md:px-0 lg:w-6/12">
                             <div class="md:mx-6 md:p-12">
-                                <div class="mb-2">
-                                    <div class="text-center">
-                                        <img class="mx-auto w-72" src="/assets/images/marrylogo2.png" alt="logo" />
-                                    </div>
-
-                                    <div class="btn-group flex justify-center p-5">
-                                        <button [routerLink]="['/auth/login']" [queryParamsHandling]="'preserve'"
-                                            routerLinkActive="btn-active" class="btn btn-outline btn-secondary">
-                                            Giriş yap
-                                        </button>
-                                        <button [routerLink]="['/auth/register']" [queryParamsHandling]="'preserve'"
-                                            routerLinkActive="btn-active" class="btn btn-outline btn-secondary">
-                                            Üye ol
-                                        </button>
-                                    </div>
+                                <div class="btn-group flex justify-center p-5">
+                                    <button [routerLink]="['/auth/login']" [queryParamsHandling]="'preserve'"
+                                        routerLinkActive="btn-active" class="btn btn-outline btn-secondary">
+                                        LOGIN
+                                    </button>
+                                    <button [routerLink]="['/auth/register']" [queryParamsHandling]="'preserve'"
+                                        routerLinkActive="btn-active" class="btn btn-outline btn-secondary">
+                                        SIGN UP
+                                    </button>
                                 </div>
 
                                 <router-outlet />
@@ -31,7 +25,7 @@
                             class="flex items-center rounded-b-lg lg:w-1/2 lg:rounded-r-lg lg:rounded-bl-none">
                             <div class="flex flex-row">
                                 <img class="w-full mx-auto justify-center items-center max-lg:contents"
-                                    src="assets/images/login_image.png" alt="" />
+                                    src="assets/images/meeting.png" alt="" />
                             </div>
                         </div>
                     </div>

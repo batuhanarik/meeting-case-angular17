@@ -1,21 +1,22 @@
 <form [formGroup]="form" (ngSubmit)="submit()">
 
     <div class="mb-4">
-        <input type="text" formControlName="firstName" placeholder="İsim" class="input input-bordered w-full" />
+        <input type="text" formControlName="firstName" placeholder="Name" class="input input-bordered w-full" />
     </div>
     <div class="mb-4">
-        <input type="text" formControlName="lastName" placeholder="Soyisim" class="input input-bordered w-full" />
+        <input type="text" formControlName="lastName" placeholder="Lastname" class="input input-bordered w-full" />
     </div>
     <div class="mb-4">
-        <input formControlName="email" type="email" placeholder="Eposta adresi" class="input input-bordered w-full" />
+        <input formControlName="email" type="email" placeholder="Email" class="input input-bordered w-full" />
     </div>
     <div class="mb-4">
-        <input type="text" formControlName="phoneNumber" placeholder="Telefon" class="input input-bordered w-full" />
+        <input type="text" formControlName="phoneNumber" placeholder="Phone Number"
+            class="input input-bordered w-full" />
     </div>
     <div class="mb-4">
-        <input type="password" formControlName="password" placeholder="Şifre" class="input input-bordered w-full" />
+        <input type="password" formControlName="password" placeholder="Password" class="input input-bordered w-full" />
     </div>
     <div class="mb-10 pt-1 pb-1 text-center">
-        <button type="submit" class="btn btn-primary mx-auto mb-3 w-full">Üye ol</button>
+        <button type="submit" class="btn btn-primary mx-auto mb-3 w-full">Sign Up</button>
     </div>
 </form>

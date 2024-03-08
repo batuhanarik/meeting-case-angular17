@@ -27,7 +27,10 @@ export class AuthService {
   register(input: RegisterInput) {
     return this._http.post<AuthResponse>(this.actionUrl + "register", input);
   }
-
+  logout(): void {
+    localStorage.setItem('auth', 'null');
+    this._router.navigate(['/auth/login']);
+  }
   login(input: LoginInput) {
     return this._http
       .post<AuthResponse>(this.actionUrl + "login", input)
