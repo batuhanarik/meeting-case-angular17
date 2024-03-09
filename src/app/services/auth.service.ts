@@ -25,7 +25,7 @@ export class AuthService {
     this.getClaims();
   };
   register(input: RegisterInput) {
-    return this._http.post<AuthResponse>(this.actionUrl + "register", input);
+    return this._http.post<number>(this.actionUrl + "register", input);
   }
   logout(): void {
     localStorage.setItem('auth', 'null');

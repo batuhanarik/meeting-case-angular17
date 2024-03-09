@@ -2,12 +2,14 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { DynamicMeetingDialogService } from '../../services/dynamicMeetingDialog.service';
-import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CalendarModule } from 'primeng/calendar';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { FileUploadModule, UploadEvent } from 'primeng/fileupload';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
+import { MeetingService } from '../../services/meeting.service';
+import { Meeting } from '../../models/meetingModel';
 @Component({
   selector: 'app-set-meeting-form',
   standalone: true,
@@ -21,13 +23,26 @@ export class SetMeetingFormComponent {
   uploadedFiles: any[] = [];
 
   setMeetingForm = new FormGroup({
-    meetingName: new FormControl(''),
-    meetingStartDate: new FormControl(''),
-    meetingEndDate: new FormControl(''),
-    meetingDocuments: new FormControl(''),
+    meetingName: new FormControl('', [Validators.required]),
+    startDate: new FormControl('', [Validators.required]),
+    endDate: new FormControl('', [Validators.required]),
+    description: new FormControl(''),
+    // meetingDocuments: new FormControl(''),
   });
-  selectedCities!: any[];
-  constructor(private messageService: MessageService) { }
+  constructor(private _meeting: MeetingService, private _message: MessageService) { }
+
+  submit() {
+    if (this.setMeetingForm.invalid) {
+      return;
+    }
+    this._meeting.addMeeting(this.setMeetingForm.value as unknown as Meeting).subscribe((res: any) => {
+      this._message.add({ severity: 'success', summary: '', detail: res.message });
+    });
+  }
+
+  resetForm() {
+    this.setMeetingForm.reset();
+  }
 
 
 
@@ -36,6 +51,6 @@ export class SetMeetingFormComponent {
       this.uploadedFiles.push(file);
     }
 
-    this.messageService.add({ severity: 'info', summary: 'File Uploaded', detail: '' });
+    this._message.add({ severity: 'info', summary: 'File Uploaded', detail: '' });
   }
 }

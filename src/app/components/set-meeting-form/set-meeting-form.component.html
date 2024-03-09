@@ -14,7 +14,7 @@
 </form> -->
 
 
-<form [formGroup]="setMeetingForm">
+<form [formGroup]="setMeetingForm" (ngSubmit)="submit()">
 
     <div class="mb-4">
         <input type="text" formControlName="meetingName" placeholder="Meeting Name"
@@ -22,11 +22,11 @@
     </div>
     <div class="flex">
         <div class="mb-4 w-1/2">
-            <input type="date" formControlName="meetingStartDate" placeholder="Meeting Start Date"
+            <input type="date" formControlName="startDate" placeholder="Meeting Start Date"
                 class="input input-bordered w-full" />
         </div>
         <div class="mb-4 w-1/2">
-            <input type="date" formControlName="meetingEndDate" placeholder="Meeting Start Date"
+            <input type="date" formControlName="endDate" placeholder="Meeting Start Date"
                 class="input input-bordered w-full" />
         </div>
     </div>
@@ -37,12 +37,14 @@
             <option>Technical Support</option>
         </select>
     </div>
+    <div class="mb-4 pt-1 pb-1 text-center ">
+        <textarea formControlName="description" placeholder="Bio"
+            class="textarea textarea-bordered textarea-md w-full"></textarea>
+    </div>
     <div class="card flex justify-content-center">
         <p-toast></p-toast>
         <p-fileUpload name="demo[]" url="https://www.primefaces.org/cdn/api/upload.php" (onUpload)="onUpload($event)"
             [multiple]="true" accept="image/*,.pdf" maxFileSize="1000000">
-
-
             <ng-template pTemplate="content">
                 <ul *ngIf="uploadedFiles.length">
                     <li *ngFor="let file of uploadedFiles">{{ file.name }} - {{ file.size }} bytes</li>
@@ -50,6 +52,7 @@
             </ng-template>
         </p-fileUpload>
     </div>
+
     <div class="mb-2 pt-1 pb-1 text-center">
         <button type="submit" class="btn btn-primary mx-auto mb-3 w-full">Set Meeting</button>
     </div>

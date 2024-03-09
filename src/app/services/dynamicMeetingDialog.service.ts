@@ -14,7 +14,7 @@ export class DynamicMeetingDialogService {
   openDialog(componentType: any, data: any): Observable<any> {
     const config: DynamicDialogConfig = {
       data: data,
-      header: 'Meeting Ayarla',
+      header: 'Set Meeting',
       width: '70%',
       contentStyle: { 'max-height': '500px', 'overflow': 'auto' }
     };
