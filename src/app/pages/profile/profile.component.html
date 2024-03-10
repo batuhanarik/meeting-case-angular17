@@ -1,0 +1,37 @@
+<div class="flex flex-wrap flex-col">
+    <form [formGroup]="userUpdateForm">
+        <div class="card flex flex-column md:flex-row md:flex-wrap gap-3">
+            <div class="form-control">
+                <label class="label">
+                    <span class="label-text">Email</span>
+                </label>
+                <label class="input-group">
+                    <span>Email</span>
+                    <input [disabled]="disabled" type="text" id="email" placeholder="batu@mail.com"
+                        class="input input-bordered" />
+                </label>
+            </div>
+            <div class="form-control">
+                <label class="label">
+                    <span class="label-text">Name</span>
+                </label>
+                <label class="input-group">
+                    <span>Name</span>
+                    <input type="text" placeholder="Batuhan" formControlName="firstName" class="input input-bordered" />
+                </label>
+            </div>
+            <div class="form-control">
+                <label class="label">
+                    <span class="label-text">Lastname</span>
+                </label>
+                <label class="input-group">
+                    <span>Lastname</span>
+                    <input type="text" placeholder="Arık" formControlName="lastName" class="input input-bordered" />
+                </label>
+            </div>
+            <button (click)="updateUser()" class="btn btn-active btn-secondary w-4/6 mx-auto">
+                Update Profile
+            </button>
+        </div>
+    </form>
+</div>

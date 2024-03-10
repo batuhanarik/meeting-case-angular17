@@ -7,7 +7,7 @@ import { ResponseModel } from '../models/responseModel';
   providedIn: 'root'
 })
 export class ProfileImageService {
-  profileImageUrl = "profileimages"
+  private profileImageUrl = "profileimages"
 
   constructor(private _http: HttpClient) { }
 
@@ -17,7 +17,7 @@ export class ProfileImageService {
     userId: number
   ): Observable<ResponseModel> {
     const formData = new FormData();
-    formData.append('profileImage', profileImage);
+    formData.append('file', profileImage);
     formData.append('userId', userId.toString());
     return this._http.post<ResponseModel>(
       this.profileImageUrl + '/Add',

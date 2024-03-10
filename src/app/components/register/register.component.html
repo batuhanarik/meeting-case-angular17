@@ -1,31 +1,27 @@
 <form [formGroup]="form" (ngSubmit)="submit()">
 
-    <div class="mb-4">
+    <div class="mb-2">
         <input type="text" formControlName="firstName" placeholder="Name" class="input input-bordered w-full" />
     </div>
-    <div class="mb-4">
+    <div class="mb-2">
         <input type="text" formControlName="lastName" placeholder="Lastname" class="input input-bordered w-full" />
     </div>
-    <div class="mb-4">
+    <div class="mb-2">
         <input formControlName="email" type="email" placeholder="Email" class="input input-bordered w-full" />
     </div>
-    <div class="mb-4">
+    <div class="mb-2">
         <input type="text" formControlName="phoneNumber" placeholder="Phone Number"
             class="input input-bordered w-full" />
     </div>
-    <div class="mb-4">
+    <div class="mb-2">
         <input type="password" formControlName="password" placeholder="Password" class="input input-bordered w-full" />
     </div>
-    <div class="mb-4">
+    <div class="mb-1">
         <div class="card flex justify-center">
             <span class="font-bold text-sm">Profil Fotoğrafınızı Yükleyebilirsiniz.</span>
-            <p-toast></p-toast>
-            <p-fileUpload name="profile_image" (onUpload)="onUpload($event)" [multiple]="false" accept="image/*"
-                maxFileSize="1000000">
+            <p-fileUpload name="profile_image" (onSelect)="onUpload($event)" (onUpload)="onUpload($event)"
+                [multiple]="false" accept="image/*" maxFileSize="1000000">
                 <ng-template pTemplate="content">
-                    <ul *ngIf="uploadedFile">
-                        <li>{{ uploadedFile.name }} - {{ uploadedFile.size }} bytes</li>
-                    </ul>
                 </ng-template>
             </p-fileUpload>
         </div>
@@ -38,3 +34,4 @@
         <button type="submit" class="btn btn-primary mx-auto mb-3 w-full">Sign Up</button>
     </div>
 </form>
+<p-toast></p-toast>
