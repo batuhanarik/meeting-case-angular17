@@ -41,7 +41,6 @@ export class NavComponent implements OnInit {
   getUserDetail() {
     this._user.getUserDetail(this._auth.claims.userId).subscribe((res: ObjectResponseModel<UserDetailDto>) => {
       this.userDetail = res.data
-      console.log(this.userDetail.profileImagePath)
     })
   }
 }

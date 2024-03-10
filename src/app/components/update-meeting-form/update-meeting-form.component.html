@@ -1,8 +1,11 @@
-<form [formGroup]="setMeetingForm" (ngSubmit)="submit()">
-
+<form [formGroup]="updateMeetingForm" (ngSubmit)="submit()">
     <div class="mb-4">
         <input type="text" formControlName="meetingName" placeholder="Meeting Name"
             class="input input-bordered w-full" />
+    </div>
+    <div class="mb-4 pt-1 pb-1 text-center ">
+        <input type="text" formControlName="description" placeholder="Description"
+            class="textarea textarea-bordered textarea-md w-full" />
     </div>
     <div class="flex">
         <div class="mb-4 w-1/2">
@@ -18,19 +21,14 @@
         Greater Than End Date!</p>
 
 
-    <div class="mb-4 pt-1 pb-1 text-center ">
-        <textarea formControlName="description" placeholder="Description"
-            class="textarea textarea-bordered textarea-md w-full"></textarea>
-    </div>
     <div class="card flex justify-content-center">
-        <p-toast></p-toast>
         <p-fileUpload name="meetingDocuments[]" (onSelect)="onUpload($event)" [multiple]="true" accept="image/*,.pdf"
             maxFileSize="100000000">
         </p-fileUpload>
     </div>
 
     <div class="mb-2 pt-1 pb-1 text-center">
-        <button type="submit" class="btn btn-primary mx-auto mb-3 w-full">Set Meeting</button>
+        <button type="submit" class="btn btn-secondary mx-auto mb-3 w-full">Update Meeting</button>
     </div>
+    <p-toast></p-toast>
 </form>
-<p-toast></p-toast>

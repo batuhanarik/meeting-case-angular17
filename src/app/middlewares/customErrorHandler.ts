@@ -10,7 +10,6 @@ export class CustomErrorHandler implements ErrorHandler {
     handleError(error: any): void {
         // const messageService = this.injector.get(MessageService);
         if (error instanceof HttpErrorResponse) {
-            console.log("Error : " + error.message)
             this._message.error();
         } else {
             // Handle other errors

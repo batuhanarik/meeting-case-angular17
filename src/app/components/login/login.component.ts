@@ -37,7 +37,6 @@ export class LoginComponent {
     this.isFormClicked = true;
     if (this.form.invalid) {
       if (this.getControls.email.invalid) {
-        console.log("make sure email correct")
         this._message.add({ severity: 'info', summary: 'Make sure your email address is correct!' });
       } else if (this.getControls.password.invalid) {
         this._message.add({ severity: 'info', summary: 'Password cannot be empty.' });
@@ -50,7 +49,6 @@ export class LoginComponent {
       .login(this.form.value as LoginInput)
       .pipe(
         catchError((err: HttpErrorResponse) => {
-          console.log("sa");
           this._message.add({ severity: 'error', summary: err.error });
           return of();
         })

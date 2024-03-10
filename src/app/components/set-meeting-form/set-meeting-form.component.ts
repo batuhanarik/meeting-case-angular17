@@ -1,10 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
-import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { Component, OnDestroy } from '@angular/core';
 import { DynamicMeetingDialogService } from '../../services/dynamicMeetingDialog.service';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { CalendarModule } from 'primeng/calendar';
-import { MultiSelectModule } from 'primeng/multiselect';
 import { FileUploadModule } from 'primeng/fileupload';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
@@ -21,9 +18,7 @@ import { MeetingDocumentService } from '../../services/meeting-document.service'
   templateUrl: './set-meeting-form.component.html'
 })
 export class SetMeetingFormComponent {
-  originalEvent: Event;
   files: File[];
-  uploadedFiles: any[] = [];
 
   setMeetingForm = new FormGroup({
     meetingName: new FormControl('', [Validators.required]),
@@ -43,11 +38,11 @@ export class SetMeetingFormComponent {
     }
     this._meeting.addMeeting(this.setMeetingForm.value as unknown as Meeting).subscribe((res: any) => {
       if (res.success) {
+        this._message.add({ severity: 'success', summary: '', detail: res.message });
+        this.resetForm();
         this._meetingDocument.addMeetingDocuments(this.files, res.data.id).subscribe((docRes) => {
-          console.log(docRes);
         })
       }
-      this._message.add({ severity: 'success', summary: '', detail: res.message });
       //To Do : Açmayı Unutma!
       // this._email.sendEmail(this._auth.claims.fullName, this.setMeetingForm.controls['meetingName'].value, this.setMeetingForm.controls['startDate'].value, this.setMeetingForm.controls['endDate'].value)
     });
@@ -59,7 +54,6 @@ export class SetMeetingFormComponent {
 
 
   onUpload(event: UploadEvent) {
-    console.log("uploaded")
     this.files = [];
     for (let file of event.files) {
       this.files.push(file);

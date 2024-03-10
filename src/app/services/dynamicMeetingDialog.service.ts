@@ -42,7 +42,21 @@ export class DynamicMeetingDialogService {
     this.ref.onClose.subscribe(result => {
       this.dialogClosedSubject.next(result);
     });
+    return this.dialogClosedSubject.asObservable();
+  }
+  openMeetingUpdateDialog(componentType: any, data: any): Observable<any> {
+    const config: DynamicDialogConfig = {
+      data: data,
+      header: 'Update Meeting',
+      width: '80%',
+      contentStyle: { 'min-height': '500px', 'max-height': '500px', 'overflow': 'auto' }
+    };
 
+    this.ref = this.dialogService.open(componentType, config);
+
+    this.ref.onClose.subscribe(result => {
+      this.dialogClosedSubject.next(result);
+    });
     return this.dialogClosedSubject.asObservable();
   }
 

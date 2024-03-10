@@ -34,7 +34,6 @@ export class MeetingMailService {
         },
         (error) => {
           this._message.add({ severity: 'error', summary: `Upss... Error has been occured : ${(error as EmailJSResponseStatus).text}` });
-          console.log('FAILED...', (error as EmailJSResponseStatus).text);
         },
       );
   }

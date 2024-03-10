@@ -59,7 +59,6 @@ export class AuthService {
           ],
       };
       this.claims = claims;
-      console.log(this.claims)
     }
   }
   private getTokenAttributes(token: string): any {

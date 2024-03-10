@@ -3,6 +3,6 @@ export interface MeetingDetailDto {
     meetingName: string;
     startDate: Date;
     endDate: Date;
-    description?: string;
+    description: string;
     documentPath?: string;
 }

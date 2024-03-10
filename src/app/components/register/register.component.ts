@@ -49,11 +49,9 @@ export class RegisterComponent {
       )
       .subscribe((res: any) => {
         if (res.success) {
-          console.log("Kayıt başarılı, profile image : " + this.profileImage);
           if (this.profileImage) {
             this._profileImage.addProfileImage(this.profileImage, res.data.id).subscribe((imgRes: any) => {
               if (imgRes.success) {
-                console.log("Profile image uploaded successfully");
                 this.profileImage = null;
               }
             })
@@ -70,10 +68,8 @@ export class RegisterComponent {
 
 
   onUpload(event: UploadEvent) {
-    console.log("uploaded")
     this.profileImage = null
     this.profileImage = event.files[0];
-    console.log(this.profileImage);
     this._message.add({ severity: 'info', summary: 'File Uploaded', detail: '' });
   }
 

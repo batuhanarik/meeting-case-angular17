@@ -11,7 +11,7 @@ import { MeetingDetailDto } from '../models/meetingDetailDto';
   providedIn: 'root'
 })
 export class MeetingService {
-  meetingsUrl = 'meetings';
+  private meetingsUrl = 'meetings';
   constructor(private _http: HttpClient) { }
 
   getMeetings(): Observable<ListResponseModel<Meeting>> {
@@ -57,31 +57,17 @@ export class MeetingService {
       meeting
     );
   }
-  // addMeetingImages(
-  //   images: File[],
-  //   weddingPlaceId: number
-  // ): Observable<ResponseModel> {
-  //   const formData = new FormData();
-  //   for (let i = 0; i < images.length; i++) {
-  //     formData.append('images', images[i]);
-  //   }
-  //   formData.append('weddingPlaceId', weddingPlaceId.toString());
-  //   return this._http.post<ResponseModel>(
-  //     this.meetingImagesUrl + '/AddMultiple',
-  //     formData
-  //   );
-  // }
+
+  updateMeeting(meeting: Meeting): Observable<any> {
+    return this._http.post<ObjectResponseModel<any>>(
+      this.meetingsUrl + '/update',
+      meeting
+    );
+  }
 
   deleteMeeting(meeting: Meeting): Observable<ResponseModel> {
     return this._http.post<ResponseModel>(this.meetingsUrl + '/delete',
       meeting
     );
   }
-
-  // deleteMeetingImage(image: MeetingImage): Observable<ResponseModel> {
-  //   return this._http.post<ResponseModel>(
-  //     this.meetingImagesUrl + '/delete',
-  //     image
-  //   );
-  // }
 }
