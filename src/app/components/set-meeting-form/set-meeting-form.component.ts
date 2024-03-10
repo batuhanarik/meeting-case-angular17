@@ -28,7 +28,7 @@ export class SetMeetingFormComponent {
     endDate: new FormControl('', [Validators.required]),
     description: new FormControl(''),
     // meetingDocuments: new FormControl(''),
-  });
+  }, { validators: this.dateRangeValidator });
   constructor(private _meeting: MeetingService, private _message: MessageService) { }
 
   submit() {
@@ -52,5 +52,20 @@ export class SetMeetingFormComponent {
     }
 
     this._message.add({ severity: 'info', summary: 'File Uploaded', detail: '' });
+  }
+
+  setToday() {
+    var today = new Date();
+    return today;
+  }
+  dateRangeValidator(formGroup: FormGroup) {
+    const startDate = formGroup.get('startDate').value;
+    const endDate = formGroup.get('endDate').value;
+
+    if (startDate && endDate && startDate > endDate) {
+      return { dateRange: true };
+    }
+
+    return null;
   }
 }

@@ -5,11 +5,14 @@ import { LoginInput } from '../../models/authModel';
 import { catchError, of } from 'rxjs';
 import { AuthService } from '../../services/auth.service';
 import { MessageService } from 'primeng/api';
+import { CustomMessageService } from '../../services/custom-message.service';
+import { ToastModule } from 'primeng/toast';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, ToastModule],
   providers: [MessageService],
   templateUrl: './login.component.html',
 })
@@ -22,7 +25,8 @@ export class LoginComponent {
   constructor(
     private _fb: FormBuilder,
     private _service: AuthService,
-    private _message: MessageService
+    private _message: MessageService,
+    private _customMessage: CustomMessageService
   ) { }
 
   get getControls() {
@@ -33,8 +37,10 @@ export class LoginComponent {
     this.isFormClicked = true;
     if (this.form.invalid) {
       if (this.getControls.email.invalid) {
-
+        console.log("make sure email correct")
+        this._message.add({ severity: 'info', summary: 'Make sure your email address is correct!' });
       } else if (this.getControls.password.invalid) {
+        this._message.add({ severity: 'info', summary: 'Password cannot be empty.' });
 
       }
       return;
@@ -43,15 +49,18 @@ export class LoginComponent {
     this._service
       .login(this.form.value as LoginInput)
       .pipe(
-        catchError((err: Error) => {
-          this._message.add({ severity: 'error', summary: err.message });
+        catchError((err: HttpErrorResponse) => {
+          console.log("sa");
+          this._message.add({ severity: 'error', summary: err.error });
           return of();
         })
       )
-      .subscribe((res: any) => {
+      .subscribe(res => {
         if (res.token) {
-          if (res.token != null) { }
+          this._message.add({ severity: 'success', summary: `Welcome ${this._service.claims.fullName}` });
+          return;
         }
       });
   }
+
 }
