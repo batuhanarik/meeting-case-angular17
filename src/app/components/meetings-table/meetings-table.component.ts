@@ -3,10 +3,11 @@ import { TableModule } from 'primeng/table';
 import { Meeting } from '../../models/meetingModel';
 import { MeetingService } from '../../services/meeting.service';
 import { MessageService } from 'primeng/api';
+import { ToastModule } from 'primeng/toast';
 @Component({
   selector: 'app-meetings-table',
   standalone: true,
-  imports: [TableModule],
+  imports: [TableModule, ToastModule],
   templateUrl: './meetings-table.component.html',
   providers: []
 })

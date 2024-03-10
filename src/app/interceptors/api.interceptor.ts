@@ -14,9 +14,6 @@ export class ApiInterceptor implements HttpInterceptor {
   ): Observable<HttpEvent<any>> {
     const auth = JSON.parse(localStorage.getItem('auth')) || {};
     const token: string | null = auth.token?.toString() || null;
-
-    console.log(token);
-
     let headers = req.headers;
 
     if (token && !(req.url.includes('login') || req.url.includes('register'))) {

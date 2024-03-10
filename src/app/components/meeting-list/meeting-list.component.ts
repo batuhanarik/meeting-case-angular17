@@ -1,7 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 import { CommonModule } from '@angular/common';
+import { MeetingService } from '../../services/meeting.service';
+import { Meeting } from '../../models/meetingModel';
 
 @Component({
   selector: 'app-meeting-list',
@@ -9,6 +11,18 @@ import { CommonModule } from '@angular/common';
   imports: [CommonModule, CardModule, ButtonModule],
   templateUrl: './meeting-list.component.html'
 })
-export class MeetingListComponent {
-  meetings: any[] = ["MEETING I", "MEETING 2", "MEETING 3", "MEETING 4", "MEETING 5", "MEETING 6"]
+export class MeetingListComponent implements OnInit {
+
+  meetings: Meeting[] = [];
+  constructor(private _meeting: MeetingService) {
+  }
+  ngOnInit() {
+    this.getMeetings();
+  }
+
+  getMeetings() {
+    this._meeting.getMeetings().subscribe((res: any) => {
+      this.meetings = res.data;
+    })
+  }
 }

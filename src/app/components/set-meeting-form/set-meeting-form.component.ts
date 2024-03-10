@@ -10,6 +10,8 @@ import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import { MeetingService } from '../../services/meeting.service';
 import { Meeting } from '../../models/meetingModel';
+import { MeetingMailService } from '../../services/meeting-mail.service';
+import { AuthService } from '../../services/auth.service';
 @Component({
   selector: 'app-set-meeting-form',
   standalone: true,
@@ -29,14 +31,16 @@ export class SetMeetingFormComponent {
     description: new FormControl(''),
     // meetingDocuments: new FormControl(''),
   }, { validators: this.dateRangeValidator });
-  constructor(private _meeting: MeetingService, private _message: MessageService) { }
+  constructor(private _auth: AuthService, private _meeting: MeetingService, private _email: MeetingMailService, private _message: MessageService) { }
 
   submit() {
     if (this.setMeetingForm.invalid) {
       return;
     }
     this._meeting.addMeeting(this.setMeetingForm.value as unknown as Meeting).subscribe((res: any) => {
+
       this._message.add({ severity: 'success', summary: '', detail: res.message });
+      this._email.sendEmail(this._auth.claims.fullName, this.setMeetingForm.controls['meetingName'].value, this.setMeetingForm.controls['startDate'].value, this.setMeetingForm.controls['endDate'].value)
     });
   }
 
