@@ -1,0 +1,25 @@
+<div class="card">
+    <p-table [value]="meetings" [tableStyle]="{ 'min-width': '50rem' }">
+        <ng-template pTemplate="header">
+            <tr>
+                <th>Meeting Name</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Description</th>
+                <th class="max-w-12">Actions</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-meeting>
+            <tr>
+                <td>{{ meeting.meetingName }}</td>
+                <td>{{ meeting.startDate }}</td>
+                <td>{{ meeting.endDate }}</td>
+                <td class="max-w-12 whitespace-nowrap overflow-hidden text-ellipsis">{{ meeting.description }}</td>
+                <td><i class="pi pi-spin pi-cog mr-2 text-yellow-400 cursor-pointer" style="font-size: 1.5rem"></i>
+                    <i (click)="deleteMeeting(meeting)" class="pi pi-times text-red-600 cursor-pointer"
+                        style="font-size: 1.5rem"></i>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>

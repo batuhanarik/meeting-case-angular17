@@ -4,11 +4,13 @@ import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angu
 import { LoginInput } from '../../models/authModel';
 import { catchError, of } from 'rxjs';
 import { AuthService } from '../../services/auth.service';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-login',
   standalone: true,
   imports: [CommonModule, FormsModule, ReactiveFormsModule],
+  providers: [MessageService],
   templateUrl: './login.component.html',
 })
 export class LoginComponent {
@@ -20,6 +22,7 @@ export class LoginComponent {
   constructor(
     private _fb: FormBuilder,
     private _service: AuthService,
+    private _message: MessageService
   ) { }
 
   get getControls() {
@@ -34,23 +37,20 @@ export class LoginComponent {
       } else if (this.getControls.password.invalid) {
 
       }
-
-      console.log(this.form.value);
       return;
     }
 
     this._service
       .login(this.form.value as LoginInput)
       .pipe(
-        catchError((err) => {
-
-          return of(null);
+        catchError((err: Error) => {
+          this._message.add({ severity: 'error', summary: err.message });
+          return of();
         })
       )
       .subscribe((res: any) => {
         if (res.token) {
-          if (res.token != null)
-            console.log(res.token);
+          if (res.token != null) { }
         }
       });
   }

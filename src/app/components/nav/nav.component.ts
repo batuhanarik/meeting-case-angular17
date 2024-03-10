@@ -3,8 +3,7 @@ import { SetMeetingFormComponent } from '../set-meeting-form/set-meeting-form.co
 import { DynamicMeetingDialogService } from '../../services/dynamicMeetingDialog.service';
 import { CommonModule } from '@angular/common';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MeetingsTableComponent } from '../meetings-table/meetings-table.component';
 @Component({
   selector: 'app-nav',
   standalone: true,
@@ -21,9 +20,11 @@ export class NavComponent {
   openSetMeetingDialog(): void {
     this._dynamicMeetingDialog.openDialog(SetMeetingFormComponent, null)
       .subscribe(result => {
-        console.log('Dialog kapatıldı. Sonuç:', result);
       });
 
-    // this._dynamicMeetingDialog.openSetMeetingModal();
+  }
+  openMeetingsListDialog() {
+    this._dynamicMeetingDialog.openMeetingsTableDialog(MeetingsTableComponent, null)
+      .subscribe(res => { })
   }
 }

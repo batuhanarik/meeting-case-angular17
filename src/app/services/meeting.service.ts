@@ -66,10 +66,10 @@ export class MeetingService {
   //   );
   // }
 
-  deleteMeeting(id: number): Observable<ResponseModel> {
-    return this._http.post<ResponseModel>(this.meetingsUrl + '/delete', {
-      id: id,
-    });
+  deleteMeeting(meeting: Meeting): Observable<ResponseModel> {
+    return this._http.post<ResponseModel>(this.meetingsUrl + '/delete',
+      meeting
+    );
   }
 
   // deleteMeetingImage(image: MeetingImage): Observable<ResponseModel> {
