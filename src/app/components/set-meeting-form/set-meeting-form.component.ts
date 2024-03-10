@@ -5,13 +5,14 @@ import { DynamicMeetingDialogService } from '../../services/dynamicMeetingDialog
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CalendarModule } from 'primeng/calendar';
 import { MultiSelectModule } from 'primeng/multiselect';
-import { FileUploadModule, UploadEvent } from 'primeng/fileupload';
+import { FileUploadModule } from 'primeng/fileupload';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import { MeetingService } from '../../services/meeting.service';
 import { Meeting } from '../../models/meetingModel';
 import { MeetingMailService } from '../../services/meeting-mail.service';
 import { AuthService } from '../../services/auth.service';
+import { MeetingDocumentService } from '../../services/meeting-document.service';
 @Component({
   selector: 'app-set-meeting-form',
   standalone: true,
@@ -29,18 +30,26 @@ export class SetMeetingFormComponent {
     startDate: new FormControl('', [Validators.required]),
     endDate: new FormControl('', [Validators.required]),
     description: new FormControl(''),
-    // meetingDocuments: new FormControl(''),
   }, { validators: this.dateRangeValidator });
-  constructor(private _auth: AuthService, private _meeting: MeetingService, private _email: MeetingMailService, private _message: MessageService) { }
+  constructor(private _auth: AuthService,
+    private _meeting: MeetingService,
+    private _email: MeetingMailService,
+    private _message: MessageService,
+    private _meetingDocument: MeetingDocumentService) { }
 
   submit() {
     if (this.setMeetingForm.invalid) {
       return;
     }
     this._meeting.addMeeting(this.setMeetingForm.value as unknown as Meeting).subscribe((res: any) => {
-
+      if (res.success) {
+        this._meetingDocument.addMeetingDocuments(this.files, res.data.id).subscribe((docRes) => {
+          console.log(docRes);
+        })
+      }
       this._message.add({ severity: 'success', summary: '', detail: res.message });
-      this._email.sendEmail(this._auth.claims.fullName, this.setMeetingForm.controls['meetingName'].value, this.setMeetingForm.controls['startDate'].value, this.setMeetingForm.controls['endDate'].value)
+      //To Do : Açmayı Unutma!
+      // this._email.sendEmail(this._auth.claims.fullName, this.setMeetingForm.controls['meetingName'].value, this.setMeetingForm.controls['startDate'].value, this.setMeetingForm.controls['endDate'].value)
     });
   }
 
@@ -49,15 +58,14 @@ export class SetMeetingFormComponent {
   }
 
 
-
-  onUpload(event: UploadEvent | any) {
+  onUpload(event: UploadEvent) {
+    console.log("uploaded")
+    this.files = [];
     for (let file of event.files) {
-      this.uploadedFiles.push(file);
+      this.files.push(file);
     }
-
     this._message.add({ severity: 'info', summary: 'File Uploaded', detail: '' });
   }
-
   setToday() {
     var today = new Date();
     return today;
@@ -72,4 +80,8 @@ export class SetMeetingFormComponent {
 
     return null;
   }
+}
+export interface UploadEvent {
+  originalEvent: Event;
+  files: File[];
 }

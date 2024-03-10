@@ -5,6 +5,7 @@ import { ObjectResponseModel } from '../models/objectResponseModel';
 import { ListResponseModel } from '../models/listResponseModel';
 import { ResponseModel } from '../models/responseModel';
 import { Meeting } from '../models/meetingModel';
+import { MeetingDetailDto } from '../models/meetingDetailDto';
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +17,11 @@ export class MeetingService {
   getMeetings(): Observable<ListResponseModel<Meeting>> {
     return this._http.get<ListResponseModel<Meeting>>(
       this.meetingsUrl + '/getall'
+    );
+  }
+  getMeetingDetails(): Observable<ListResponseModel<MeetingDetailDto>> {
+    return this._http.get<ListResponseModel<MeetingDetailDto>>(
+      this.meetingsUrl + '/getmeetingdetails'
     );
   }
 

@@ -1,15 +1,19 @@
 <div class="flex flex-row justify-center flex-wrap">
     @for (meeting of meetings; track $index) {
     <div class="card w-96 bg-base-100 shadow-xl mt-2 mx-2">
-        <figure><img src="https://daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.jpg" alt="Shoes" /></figure>
+        <figure><img src="assets/images/meeting.png" alt="Shoes" /></figure>
         <div class="card-body">
             <h2 class="card-title">
                 {{meeting.meetingName}}
-                <div class="badge badge-secondary">NEW</div>
+                <div class="badge badge-warning">IMPORTANT</div>
             </h2>
-            <p>If a dog chews shoes whose shoes does he choose?</p>
-            <div class="card-actions justify-end">
-                <div class="badge badge-outline">{{meeting.startDate}} - </div>
+            <p>{{meeting.description}}</p>
+            <div class="card-actions justify-start">
+                <button (click)="download(meeting.id)"
+                    [class]="meeting.documentPath ? 'text-green-600' : 'text-red-500'"
+                    class="pi pi-download cursor-pointer" style="font-size: 1.2rem;"></button>
+                <div class="badge badge-outline">{{meeting.startDate}} </div>
+                -
                 <div class="badge badge-outline">{{meeting.endDate}}</div>
             </div>
         </div>

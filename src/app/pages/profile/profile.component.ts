@@ -4,11 +4,12 @@ import { UserService } from '../../services/user.service';
 import { AuthService } from '../../services/auth.service';
 import { UserModel } from '../../models/userModel';
 import { MessageService } from 'primeng/api';
+import { ToastModule } from 'primeng/toast';
 
 @Component({
   selector: 'app-profile',
   standalone: true,
-  imports: [FormsModule, ReactiveFormsModule],
+  imports: [FormsModule, ReactiveFormsModule, ToastModule],
   providers: [MessageService],
   templateUrl: './profile.component.html'
 })
@@ -33,7 +34,7 @@ export class ProfileComponent {
   }
 
   ngOnInit(): void {
-    // this.getUser();
+    this.getUser();
   }
   getUser() {
     this._user
@@ -58,9 +59,9 @@ export class ProfileComponent {
       .updateUser(this.userUpdateForm.value)
       .subscribe((res: any) => {
         if (res.success) {
-          this._message.add({ severity: 'error', summary: res.message });
+          this.getUser();
+          this._message.add({ severity: 'success', summary: res.message });
         }
       });
   }
-
 }

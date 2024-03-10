@@ -35,7 +35,6 @@ export class RegisterComponent {
   }
 
   submit() {
-    console.log("submitting...")
     if (this.form.invalid) {
       this._message.add({ severity: 'info', summary: 'You must fiil out the form completely' });
       return;
@@ -51,7 +50,7 @@ export class RegisterComponent {
       .subscribe((res: any) => {
         if (res.success) {
           console.log("Kayıt başarılı, profile image : " + this.profileImage);
-          if (this.profileImage.name) {
+          if (this.profileImage) {
             this._profileImage.addProfileImage(this.profileImage, res.data.id).subscribe((imgRes: any) => {
               if (imgRes.success) {
                 console.log("Profile image uploaded successfully");
@@ -59,13 +58,12 @@ export class RegisterComponent {
               }
             })
           }
-          else {
-            console.log("profile image boş");
-          }
+          this.form.reset();
           setTimeout(() => {
             this.router.navigateByUrl("/auth/login");
-            this._message.add({ severity: 'success', summary: `Hey! ${res.data.firstName} ${res.data.lastName}`, detail: res.message })
-          }, 1500)
+          }, 2000)
+          this._message.add({ severity: 'success', summary: `Hey! ${res.data.firstName} ${res.data.lastName}`, detail: res.message })
+
         }
       });
   }
