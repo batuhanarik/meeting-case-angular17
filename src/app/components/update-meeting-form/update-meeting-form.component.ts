@@ -54,12 +54,6 @@ export class UpdateMeetingFormComponent implements OnInit, OnDestroy {
       if (res.success) {
         this._message.add({ severity: 'success', summary: '', detail: res.message });
       }
-
-      // if (res.success) {
-      //   this._meetingDocument.addMeetingDocuments(this.files, res.data.id).subscribe((docRes) => {
-      //     console.log(docRes);
-      //   })
-      // }
     });
   }
   getMeetingDetail() {
