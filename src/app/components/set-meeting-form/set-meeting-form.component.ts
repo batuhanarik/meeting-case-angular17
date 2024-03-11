@@ -10,6 +10,8 @@ import { Meeting } from '../../models/meetingModel';
 import { MeetingMailService } from '../../services/meeting-mail.service';
 import { AuthService } from '../../services/auth.service';
 import { MeetingDocumentService } from '../../services/meeting-document.service';
+import { catchError, of } from 'rxjs';
+import { HttpErrorResponse } from '@angular/common/http';
 @Component({
   selector: 'app-set-meeting-form',
   standalone: true,
@@ -36,16 +38,21 @@ export class SetMeetingFormComponent {
     if (this.setMeetingForm.invalid) {
       return;
     }
-    this._meeting.addMeeting(this.setMeetingForm.value as unknown as Meeting).subscribe((res: any) => {
-      if (res.success) {
-        this._message.add({ severity: 'success', summary: '', detail: res.message });
-        this.resetForm();
-        this._meetingDocument.addMeetingDocuments(this.files, res.data.id).subscribe((docRes) => {
-        })
-      }
-      //To Do : Açmayı Unutma!
-      // this._email.sendEmail(this._auth.claims.fullName, this.setMeetingForm.controls['meetingName'].value, this.setMeetingForm.controls['startDate'].value, this.setMeetingForm.controls['endDate'].value)
-    });
+    this._meeting.addMeeting(this.setMeetingForm.value as unknown as Meeting).pipe(
+      catchError((err: HttpErrorResponse) => {
+        this._message.add({ severity: 'error', summary: JSON.parse(err.error)['Message'] });
+        return of();
+      })
+    )
+      .subscribe((res: any) => {
+        if (res.success) {
+          this._message.add({ severity: 'success', summary: '', detail: res.message });
+          this.resetForm();
+          this._meetingDocument.addMeetingDocuments(this.files, res.data.id).subscribe((docRes) => {
+          })
+        }
+        this._email.sendEmail(this._auth.claims.fullName, this.setMeetingForm.controls['meetingName'].value, this.setMeetingForm.controls['startDate'].value, this.setMeetingForm.controls['endDate'].value)
+      });
   }
 
   resetForm() {

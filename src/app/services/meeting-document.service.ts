@@ -28,13 +28,10 @@ export class MeetingDocumentService {
     );
   }
 
-  download(id: number): Observable<any> {
-    return this._http.get('meetingdocuments/download?id=' + id)
+  download(id: number): Observable<string> {
+    return this._http.get('meetingdocuments/download?id=' + id, { responseType: 'text' })
   }
 
-  downloadZip(): Observable<Blob> {
-    return this._http.get('download', { responseType: 'blob' });
-  }
 
   downloadDocument(documentPath: string) {
     this._http.get(documentPath, { responseType: 'blob' }).subscribe(
@@ -43,7 +40,6 @@ export class MeetingDocumentService {
         saveAs(response, fileName);
       },
       error => {
-        console.error('Error downloading zip file:', error);
       }
     );
   }

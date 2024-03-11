@@ -11,7 +11,6 @@ import en from '@angular/common/locales/en';
 import { FormsModule } from '@angular/forms';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { CustomErrorHandler } from './middlewares/customErrorHandler';
-import { errorInterceptor } from './interceptors/error.interceptor';
 import { CustomMessageService } from './services/custom-message.service';
 import { MessageService } from 'primeng/api';
 
@@ -32,7 +31,6 @@ export const appConfig: ApplicationConfig = {
       useClass: CustomErrorHandler,
     },
     { provide: MessageService, useClass: MessageService },
-    { provide: CustomMessageService, useClass: CustomMessageService },
     { provide: ENVIRONMENT, useValue: environment },
     importProvidersFrom(FormsModule),
     importProvidersFrom(HttpClientModule),

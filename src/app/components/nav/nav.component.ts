@@ -43,4 +43,8 @@ export class NavComponent implements OnInit {
       this.userDetail = res.data
     })
   }
+
+  logout() {
+    this._auth.logout();
+  }
 }

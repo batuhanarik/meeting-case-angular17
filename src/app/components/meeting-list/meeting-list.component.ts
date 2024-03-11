@@ -36,19 +36,13 @@ export class MeetingListComponent implements OnInit {
     })
   }
 
-  downloadMeetingDocument(documentPath: string) {
-    console.log("download document")
 
-    const fullPath = this.documentPathPipe.transform(documentPath);
-    this._meetingDocument.downloadDocument(fullPath);
-  }
 
   download(id: number) {
-    let fullPath = "";
-    this._meetingDocument.download(id).subscribe((res: string) => {
-      this._meetingDocument.downloadDocument(environment.apiUrlWithoutUrl + res.replace(/\\/g, '/'))
+    this._meetingDocument.download(Number(id)).subscribe((res: string) => {
+      const transformedPath = this.documentPathPipe.transform(res);
+      this._meetingDocument.downloadDocument(transformedPath);
     })
-    // console.log("full path : " + fullPath)
-    // this._meetingDocument.downloadDocument(fullPath);
+
   }
 }

@@ -10,6 +10,7 @@ export class DocumentPathPipe implements PipeTransform {
   transform(value: string): string {
     // value = value.replace(/\\\\/g, '/');
     value = value.replace(/\\/g, '/');
+    value = value.replace('wwwroot/', '')
     const fullPath = environment.apiUrlWithoutUrl + value;
     console.log(fullPath)
     return fullPath;

@@ -9,16 +9,18 @@ import { MeetingMailService } from '../../services/meeting-mail.service';
 import { MessageService } from 'primeng/api';
 import { MeetingDocumentService } from '../../services/meeting-document.service';
 import { Meeting } from '../../models/meetingModel';
-import { DatePipe } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-update-meeting-form',
   standalone: true,
-  imports: [FormsModule, ReactiveFormsModule, ToastModule, FileUploadModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, ToastModule, FileUploadModule],
   providers: [MessageService, DatePipe],
   templateUrl: './update-meeting-form.component.html'
 })
 export class UpdateMeetingFormComponent implements OnInit, OnDestroy {
+  ref: DynamicDialogRef | undefined;
+
   constructor(private config: DynamicDialogConfig,
     private _meeting: MeetingService,
     private _message: MessageService,
@@ -26,9 +28,10 @@ export class UpdateMeetingFormComponent implements OnInit, OnDestroy {
     private _datePipe: DatePipe
   ) { }
   ngOnDestroy(): void {
-    this.ref.destroy();
+    if (this.ref)
+      this.ref.destroy();
+
   }
-  ref: DynamicDialogRef | undefined;
   meetingDetail: any;
   ngOnInit(): void {
     this.getMeetingDetail();

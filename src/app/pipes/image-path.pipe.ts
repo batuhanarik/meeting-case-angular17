@@ -11,7 +11,6 @@ export class ImagePathPipe implements PipeTransform {
     value = value.replace(/\\/g, '/');
 
     const fullPath = environment.apiUrlWithoutUrl + value;
-    console.log(fullPath)
     return fullPath;
   }
 
